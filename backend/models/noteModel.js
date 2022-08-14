@@ -13,6 +13,11 @@ const noteSchema = mongoose.Schema(
 		labels: {
 			type: Array,
 			required: false
+		},
+		user: {
+			type: mongoose.Types.ObjectId,
+			required: true,
+			ref: 'User'
 		}
 	},
 	{

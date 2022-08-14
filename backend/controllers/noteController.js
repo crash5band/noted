@@ -2,7 +2,7 @@ const asyncHandler = require('express-async-handler')
 const Note = require('../models/noteModel')
 
 const getNotes = asyncHandler( async (req, res) => {
-	const notes = await Note.find()
+	const notes = await Note.find({ user: req.user.id })
 	res.status(200).json(notes)
 })
 
@@ -13,7 +13,12 @@ const createNote = asyncHandler(async (req, res) => {
 		throw new Error('Cannot create an empty note')
 	}
 
-	const newNote = await Note.create(req.body)
+	const newNote = await Note.create({
+		title,
+		text,
+		labels,
+		user: req.user.id
+	})
 	res.status(200).json(newNote)
 })
 
@@ -22,6 +27,18 @@ const updateNote = asyncHandler(async (req, res) => {
 	if (!note) {
 		res.status(400)
 		throw new Error('Note not found')
+	}
+
+	// verify the user exists
+	if (!req.user) {
+		res.status(400)
+		throw new Error('User does not exist')
+	}
+
+	// verify the user owns this note
+	if (note.user.toString() !== req.user.id) {
+		res.status(400)
+		throw new Error('Not authorized')
 	}
 
 	const updatedNote = await Note.findByIdAndUpdate(req.params.id, req.body, { new: true })
@@ -33,6 +50,18 @@ const deleteNote = asyncHandler(async (req, res) => {
 	if (!note) {
 		res.status(400)
 		throw new Error('Note not found')
+	}
+
+	// verify the user exists
+	if (!req.user) {
+		res.status(400)
+		throw new Error('User does not exist')
+	}
+
+	// verify the user owns this note
+	if (note.user.toString() !== req.user.id) {
+		res.status(400)
+		throw new Error('Not authorized')
 	}
 
 	await Note.findByIdAndDelete(req.params.id)

@@ -4,6 +4,7 @@
   "description": "notes application using mern stack",
   "main": "server.js",
   "scripts": {
+    "dev": "concurrently \"nodemon backend/server.js\" \"npm --prefix frontend run start\"",
     "start": "node backend/server.js",
     "server": "nodemon backend/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -24,6 +25,7 @@
     "mongoose": "^6.5.2"
   },
   "devDependencies": {
+    "concurrently": "^7.3.0",
     "nodemon": "^2.0.19"
   }
 }

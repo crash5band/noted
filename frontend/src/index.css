@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300;8..144,400;8..144,600;8..144,700&display=swap');
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto Flex', sans-serif;
+  background-color: #f4f4f4;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #fff;
+  min-height: 100vh;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 18pt;
+}
+
+.header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+  background-color: #ffe68e;
+}
+
+.nav-list {
+  display: flex;
+  list-style-type: none;
+}
+
+.nav-list li {
+  margin: 0px 10px;
+}
+
+.form-container {
+  max-width: 500px;
+  margin: auto;
+}
+
+.form {
+  margin-top: 20px;
+}
+
+.form-group {
+  width: 100%;
+  padding: 5px 0px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 5px;
+  outline: none;
+  border: 2px solid #ccc;
+  border-radius: 2px;
+}
+
+.btn {
+  padding: 7px 15px;
+  outline: none;
+  background-color: #f69a10;
+  border: none;
+  border-radius: 2px;
+  color: #fff;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
