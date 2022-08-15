@@ -1,8 +1,9 @@
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const User = require('../models/userModel')
+const asyncHandler = require('express-async-handler')
 
-const register = (req, res) => {
+const register = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body
   if (!name || !email || !password) {
     res.status(400)
@@ -10,9 +11,9 @@ const register = (req, res) => {
   }
 
   // verify user does not already exist
-  const exists = User.find({ email })
+  const exists = await User.findOne({ email })
   if (exists) {
-    res.stats(400)
+    res.status(400)
     throw new Error('User already exists')
   }
 
@@ -29,9 +30,9 @@ const register = (req, res) => {
     email: newUser.email,
     token: generateToken(newUser.id)
   })
-}
+})
 
-const login = (req, res) => {
+const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body
   if (!email || !password) {
     res.status(400)
@@ -39,7 +40,7 @@ const login = (req, res) => {
   }
 
   // verify user exists
-  const user = await User.find({ email })
+  const user = await User.findOne({ email })
   if (!user) {
     res.status(400)
     throw new Error('User does not exist')
@@ -56,11 +57,11 @@ const login = (req, res) => {
     email: user.email,
     token: generateToken(user.id)
   })
-}
+})
 
-const get = (req, res) => {
+const get = asyncHandler(async (req, res) => {
   return res.status(200).json(req.user)
-}
+})
 
 const hashPassword = async password => {
   const salt = await bcrypt.genSalt()
@@ -71,7 +72,7 @@ const hashPassword = async password => {
 
 const generateToken = id => {
   return jwt.sign(id, process.env.JWT_SECRET, {
-    expiresIn: '30d'
+    expiresIn: "30d",
   })
 }
 
