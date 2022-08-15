@@ -46,6 +46,13 @@ a {
   margin: 0px 10px;
 }
 
+.nav-list button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
 .form-container {
   max-width: 500px;
   margin: auto;
@@ -75,6 +82,12 @@ a {
   border: none;
   border-radius: 2px;
   color: #fff;
+  cursor: pointer;
+  transition: opacity 0.25s;
+}
+
+.btn:hover {
+  opacity: 0.90;
 }
 
 .btn-block {

@@ -1,8 +1,7 @@
 import { FaSignInAlt, FaSignOutAlt, FaUserAlt } from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux"
-import { logout } from "../features/auth/authSlice"
-import { useEffect } from 'react'
+import { logout, reset } from "../features/auth/authSlice"
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -12,13 +11,9 @@ const Header = () => {
 
   const onLogout = () => {
     dispatch(logout())
+    navigate("/login")
+    dispatch(reset())
   }
-
-  useEffect(() => {
-    if (!user) {
-      navigate("/login")
-    }
-  }, [user, navigate, dispatch])
 
   return (
   <header className="header">
