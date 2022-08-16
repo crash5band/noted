@@ -9,8 +9,9 @@ const initialState = {
   message: ""
 }
 
-const getNotes = createAsyncThunk("notes/get", async (note, token, thunkAPI) => {
+export const getNotes = createAsyncThunk("notes/get", async (note, thunkAPI) => {
   try {
+    const token = thunkAPI.getState().auth.user.token
     return await notesService.getNotes(token)
   } catch (error) {
     const message = error?.response?.data?.message || error.message || error.toString()
@@ -18,8 +19,9 @@ const getNotes = createAsyncThunk("notes/get", async (note, token, thunkAPI) => 
   }
 })
 
-const createNote = createAsyncThunk("notes/create", async (note, token, thunkAPI) => {
+export const createNote = createAsyncThunk("notes/create", async (note, thunkAPI) => {
   try {
+    const token = thunkAPI.getState().auth.user.token
     return await notesService.createNote(note, token)
   } catch (error) {
     const message = error?.response?.data?.message || error.message || error.toString()
@@ -27,8 +29,9 @@ const createNote = createAsyncThunk("notes/create", async (note, token, thunkAPI
   }
 })
 
-const updateNote = createAsyncThunk("notes/update", async (note, token, thunkAPI) => {
+export const updateNote = createAsyncThunk("notes/update", async (note, thunkAPI) => {
   try {
+    const token = thunkAPI.getState().auth.user.token
     return await notesService.updateNote(note, token)
   } catch (error) {
     const message = error?.response?.data?.message || error.message || error.toString()
@@ -36,8 +39,9 @@ const updateNote = createAsyncThunk("notes/update", async (note, token, thunkAPI
   }
 })
 
-const deleteNote = createAsyncThunk("notes/delete", async (id, token, thunkAPI) => {
+export const deleteNote = createAsyncThunk("notes/delete", async (id, thunkAPI) => {
   try {
+    const token = thunkAPI.getState().auth.user.token
     return await notesService.deleteNote(id, token)
   } catch (error) {
     const message = error?.response?.data?.message || error.message || error.toString()
@@ -59,7 +63,7 @@ const notesSlice = createSlice({
     .addCase(getNotes.fulfilled, (state, action) => {
       state.isLoading = false
       state.isSucceess = true
-      state.goals.push(action.payload)
+      state.notes = action.payload
     })
     .addCase(getNotes.rejected, (state, action) => {
       state.isLoading = false
@@ -72,7 +76,7 @@ const notesSlice = createSlice({
     .addCase(createNote.fulfilled, (state, action) => {
       state.isLoading = false
       state.isSucceess = true
-      state.goals.push(action.payload)
+      state.notes.push(action.payload)
     })
     .addCase(createNote.rejected, (state, action) => {
       state.isLoading = false
@@ -85,7 +89,7 @@ const notesSlice = createSlice({
     .addCase(updateNote.fulfilled, (state, action) => {
       state.isLoading = false
       state.isSucceess = true
-      state.goald = state.goals.map(n => n.id === action.payload.id ? action.payload : n)
+      state.notes = state.notes.map(n => n.id === action.payload.id ? action.payload : n)
     })
     .addCase(updateNote.rejected, (state, action) => {
       state.isLoading = false
@@ -98,7 +102,7 @@ const notesSlice = createSlice({
     .addCase(deleteNote.fulfilled, (state, action) => {
       state.isLoading = false
       state.isSucceess = true
-      state.goals = state.goals.filter(n => n.id !== action.payload.id)
+      state.notes = state.notes.filter(n => n.id !== action.payload.id)
     })
     .addCase(deleteNote.rejected, (state, action) => {
       state.isLoading = false
