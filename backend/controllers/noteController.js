@@ -13,6 +13,7 @@ const createNote = asyncHandler(async (req, res) => {
 		throw new Error('Cannot create an empty note')
 	}
 
+	console.log("waiting...")
 	const newNote = await Note.create({
 		title,
 		text,
