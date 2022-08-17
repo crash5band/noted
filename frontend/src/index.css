@@ -8,6 +8,7 @@
 body {
   font-family: 'Roboto Flex', sans-serif;
   background-color: #f4f4f4;
+  overflow-x: hidden;
 }
 
 a {
@@ -93,4 +94,217 @@ a {
 .btn-block {
   display: block;
   width: 100%;
+}
+
+.btn-outline {
+  border: 1px solid #f69a10;
+  background-color: transparent;
+  color: #f69a10;
+  border-radius: 5px;
+}
+
+.no-notes {
+  text-align: center;
+  opacity: 0.75;
+}
+
+.notes-container {
+
+}
+
+.note {
+  border: none;
+  background-color: #ffefa4;
+  color: #000;
+  border-radius: 3px;
+  width: 200px;
+  height: fit-content;
+  margin: 10px;
+  padding: 5px 10px;
+  transition: all 0.25s;
+  white-space: pre-wrap;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stack .note {
+  width: 80%;
+  max-height: 250px;
+  min-height: 100px;
+}
+
+.note:hover {
+  box-shadow: 0px 2px 5px rgba(100, 100, 100, 0.2);
+  transform: translateY(-3px);
+}
+
+.note-title {
+  font-size: 16pt;
+}
+
+.modal {
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  background-color: rgba(100, 100, 100, 0.5);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#editor {
+  padding: 10px;
+  overflow-y: auto;
+  resize: none;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  width: 100%;
+  height: 100%;
+  display: block;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.editor-container {
+  position: fixed;
+  top: 15%;
+  width: 550px;
+  height: 500px;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #fff;
+}
+
+.editor-container input {
+  width: 100%;
+  outline: none;
+  border: none;
+}
+
+.editor-container #title {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  font-size: 20pt;
+}
+
+.editor-container #label {
+  border-radius: 3px;
+  padding: 8px;
+  margin: 5px;
+  margin-top: 0px;
+  font-size: 12pt;
+  border-top: 1px solid #ccc;
+  background-color: transparent;
+}
+
+.labels-container {
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 35px;
+  max-height: 100px;
+  height: fit-content;
+  overflow-y: auto;
+  box-shadow: inset 2px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+.label .label-delete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px 3px;
+  margin: 0;
+  margin-left: 5px;
+  border-radius: 50%;
+  font-size: 8pt;
+  background-color: #ffc670;
+  color: #000;
+  opacity: 0;
+  transition: all 0.25s;
+}
+
+.label .label-delete:hover {
+  opacity: 1;
+}
+
+.toolbar {
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.editor-actions {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.editor-toolbar .btn {
+  margin: 0px 2px;
+}
+
+.note-body {
+  height: fit-content;
+  min-height: 70px;
+  max-height: 400px;
+}
+
+.note-labels {
+  margin: 5px 0px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.label-controls {
+  height: fit-content;
+  max-height: 100px;
+  width: 100%;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  margin: 2px;
+  padding: 2px 8px;
+  border-radius: 18px;
+  background-color: #f69a10;
+  width: fit-content;
+}
+
+.label-text {
+  font-size: 11pt;
+}
+
+.no-labels {
+  align-self: center;
+  font-size: 11pt;
+  opacity: 0.4;
 }
