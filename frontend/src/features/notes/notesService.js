@@ -21,7 +21,7 @@ const createNote = async (note, token) => {
 }
 
 const updateNote = async (note, token) => {
-  const response = await axios.put(`${API_URI}/${note.id}`, note, getAuthorizationConfig(token))
+  const response = await axios.put(`${API_URI}/${note._id}`, note, getAuthorizationConfig(token))
   return response.data
 } 
 
@@ -30,11 +30,22 @@ const deleteNote = async (id, token) => {
   return response.data
 }
 
+const findNoteIndex = (notes, id) => {
+  for (let i = 0; i < notes.length; ++i) {
+    if (notes[i]._id === id) {
+      return i
+    }
+  }
+
+  return -1
+}
+
 const notesService = {
   getNotes,
   createNote,
   updateNote,
   deleteNote,
+  findNoteIndex,
 }
 
 export default notesService

@@ -9,7 +9,7 @@ const initialState = {
   message: ""
 }
 
-export const getNotes = createAsyncThunk("notes/get", async (note, thunkAPI) => {
+export const getNotes = createAsyncThunk("notes/get", async (_, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.user.token
     return await notesService.getNotes(token)
@@ -89,7 +89,10 @@ const notesSlice = createSlice({
     .addCase(updateNote.fulfilled, (state, action) => {
       state.isLoading = false
       state.isSucceess = true
-      state.notes = state.notes.map(n => n.id === action.payload.id ? action.payload : n)
+
+      // find index of update note
+      const index = notesService.findNoteIndex(state.notes, action.payload._id)
+      state.notes = [...state.notes.slice(0, index), action.payload, ...state.notes.slice(index + 1)]
     })
     .addCase(updateNote.rejected, (state, action) => {
       state.isLoading = false
@@ -102,7 +105,7 @@ const notesSlice = createSlice({
     .addCase(deleteNote.fulfilled, (state, action) => {
       state.isLoading = false
       state.isSucceess = true
-      state.notes = state.notes.filter(n => n.id !== action.payload.id)
+      state.notes = state.notes.filter(n => n._id !== action.payload.id)
     })
     .addCase(deleteNote.rejected, (state, action) => {
       state.isLoading = false
