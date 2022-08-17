@@ -13,7 +13,6 @@ const createNote = asyncHandler(async (req, res) => {
 		throw new Error('Cannot create an empty note')
 	}
 
-	console.log("waiting...")
 	const newNote = await Note.create({
 		title,
 		text,
@@ -24,7 +23,7 @@ const createNote = asyncHandler(async (req, res) => {
 })
 
 const updateNote = asyncHandler(async (req, res) => {
-	const note = Note.findById(req.params.id)
+	const note = await Note.findById(req.params.id)
 	if (!note) {
 		res.status(400)
 		throw new Error('Note not found')
@@ -47,7 +46,7 @@ const updateNote = asyncHandler(async (req, res) => {
 })
 
 const deleteNote = asyncHandler(async (req, res) => {
-	const note = Note.findById(req.params.id)
+	const note = await Note.findById(req.params.id)
 	if (!note) {
 		res.status(400)
 		throw new Error('Note not found')
