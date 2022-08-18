@@ -18,6 +18,8 @@ const Dashboard = () => {
   const [editorOpen, setEditorOpen] = useState(false)
   const [editNote, setEditNote] = useState(emptyNote)
   const [viewMode, setViewMode] = useState("grid")
+  const [viewNotes, setViewNotes] = useState([])
+  const [search, setSearch] = useState("")
   const { notes, isLoading, isSuccess, isError, message } = useSelector(state => state.notes)
   const { user } = useSelector(state => state.auth)
 
@@ -30,6 +32,17 @@ const Dashboard = () => {
     dispatch(deleteNote(id))
   }
   
+  const onSearch = e => {
+    const q = e.target.value
+    setSearch(q)
+    console.log(q)
+    if (q.length < 1) {
+      setViewNotes(notes)
+    } else {
+      setViewNotes(notes.filter(n => n.title.includes(q) || n.text.includes(q)))
+    }
+  }
+
   useEffect(() => {
     if (user) {
       dispatch(getNotes())
@@ -40,13 +53,17 @@ const Dashboard = () => {
     }
   }, [user, dispatch])
 
+
   const containerClass = "notes-container " + viewMode
 
   return (
     <>
       <section className="toolbar">
-        <button className="btn btn-outline" name="stack" onClick={() => setViewMode("stack")}><FaThList /></button>
-        <button className="btn btn-outline" name="grid" onClick={() => setViewMode("grid")}><FaThLarge /></button>
+        {/* <input type="text" value={search} onChange={onSearch}/> */}
+        <div className="view-toolbar">
+          <button className="btn btn-outline" name="stack" onClick={() => setViewMode("stack")}><FaThList /></button>
+          <button className="btn btn-outline" name="grid" onClick={() => setViewMode("grid")}><FaThLarge /></button>
+        </div>
         <button className="btn" onClick={onNewNote}>New Note</button>
       </section>
       { notes.length > 0 ? (
