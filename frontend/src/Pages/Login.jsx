@@ -4,6 +4,7 @@ import { toast } from "react-toastify"
 import { useNavigate } from "react-router-dom"
 import { login, reset } from "../features/auth/authSlice"
 import { useEffect } from "react"
+import Spinner from "../Components/Spinner"
 
 const Login = () => {
   const navigate = useNavigate()
@@ -42,6 +43,10 @@ const Login = () => {
     dispatch(reset())
   }, [user, isSuccess, isError, message, dispatch, navigate])
 
+  if (isLoading) {
+    return <Spinner />
+  }
+  
   return (
     <div className="form-container">
       <section>

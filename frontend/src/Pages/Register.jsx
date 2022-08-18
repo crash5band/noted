@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { register, reset } from "../features/auth/authSlice"
 import { useEffect } from "react"
+import Spinner from "../Components/Spinner"
 
 const Register = () => {
   const navigate = useNavigate()
@@ -17,7 +18,7 @@ const Register = () => {
   })
 
   const { name, email, password, password2 } = formData
-  const { user, isSuccess, isError, message } = useSelector(state => state.auth)
+  const { user, isSuccess, isError, message, isLoading } = useSelector(state => state.auth)
 
   useEffect(() => {
     if (isError) {
@@ -53,6 +54,10 @@ const Register = () => {
     }
 
     dispatch(register(userData))
+  }
+
+  if (isLoading) {
+    return <Spinner />
   }
 
   return (
